@@ -1,0 +1,33 @@
+{
+  "name": "gateway",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=run node ./src/index.js",
+    "dev": "NODE_ENV=run nodemon -L --inspect=0.0.0.0 ./src/index.js",
+    "test": "NODE_ENV=test jest --passWithNoTests",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/estevesegura/keep-secrets"
+  },
+  "keywords": [],
+  "author": "Esteve Segura",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "http-proxy-middleware": "^2.0.6",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-throw-expressions": "^7.16.7",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.30.0",
+    "eslint-config-google": "^0.14.0",
+    "jest": "^26.4.2",
+    "nodemon": "^2.0.19"
+  }
+}
