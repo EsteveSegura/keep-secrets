@@ -15,7 +15,3 @@ services:
 networks:
   keep-secrets:
     name: keep-secrets
-    external: true
-volumes:
-  redis_data:
-    driver: local
