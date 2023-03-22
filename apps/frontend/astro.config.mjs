@@ -11,6 +11,10 @@ export default defineConfig({
   adapter: node({
     mode: "standalone"
   }),
+  server: { 
+    port: 3002,
+    host: true,
+  },
   vite: {
     ssr: {
       noExternal: ['path-to-regexp']

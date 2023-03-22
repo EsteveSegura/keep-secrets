@@ -5,6 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "serve:build": "node ./dist/server/entry.mjs",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",

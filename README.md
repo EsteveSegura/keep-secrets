@@ -9,7 +9,7 @@
 
 ![Graph gif](./assets/preview.gif)
 
-## Installation
+## Native Installation
 
 **NOTE**: NodeJS 16.x.x or higher is required.
 
@@ -22,6 +22,39 @@ $ cd keep-secrets
 
 # install NodeJS if is not installed
 $ cd src && yarn i && yarn start
+```
+
+## Docker Installation
+
+If you want to run the project from docker or a portainer simply run the following docker-compose.yml
+
+```yaml
+version: "3.7"
+
+services:
+  api:
+    image: girlazo/keep-secrets
+    depends_on:
+      - mongo
+    ports:
+      - 3002:3002
+    command: yarn start
+    networks:
+      - keep-secrets
+  mongo:
+    image: mongo
+    volumes:
+      - ./data/mongo:/data/db
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    networks:
+      - keep-secrets
+networks:
+  keep-secrets:
+    name: keep-secrets
 ```
 
 ## Usage
