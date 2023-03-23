@@ -11,15 +11,14 @@ const tokenValidator = async (req, res, next) => {
   const [bearer, token] = headers['authorization'].split(' ');
 
   if (bearer.toLowerCase() !== 'bearer') {
-    return res.status(400)
-        .json({message: 'Token is not bearer'});
+    return res.status(400).json({message: 'Invalid bearer token.'});
   }
 
   try {
     await jwt.verify(token, signature);
     next();
   } catch (err) {
-    return res.status(403).json({message: 'Token signature is not valid'});
+    return res.status(403).json({message: 'Invalid token'});
   }
 };
 

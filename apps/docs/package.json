@@ -1,0 +1,24 @@
+{
+  "name": "docs",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=run node  ./src/index.js",
+    "dev": "NODE_ENV=run nodemon --inspect=0.0.0.0 ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/estevesegura/keep-secrets"
+  },
+  "keywords": [],
+  "author": "Esteve Segura",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "swagger-ui-express": "^4.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}

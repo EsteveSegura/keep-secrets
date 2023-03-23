@@ -4,7 +4,7 @@ const mongoConnectionUri = process.env.MONGO_URI || 'mongodb://admin:admin@local
 
 const run = {
   server: {
-    port: 3000,
+    port: process.env.SECRET_API_PORT || 3001,
   },
   mongo: {
     mongoConnectionUri,
