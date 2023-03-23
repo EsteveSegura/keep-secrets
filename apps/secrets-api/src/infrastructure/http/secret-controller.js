@@ -75,18 +75,28 @@ router.get('/:id/:secretKey',
       }
     });
 
-router.delete('/:id',
+router.delete('/:id/:secretKey',
+    param('id')
+        .notEmpty().withMessage(NOT_EMPTY)
+        .isString().withMessage(IS_STRING),
+    param('secretKey')
+        .notEmpty().withMessage(NOT_EMPTY)
+        .isString().withMessage(IS_STRING),
+    httpValidator,
     // isTokenPresent,
     async (req, res) => {
-      const {id} = req.params;
+      const {id, secretKey} = req.params;
 
       try {
-        const command = new DeleteSecretCommand({id});
+        const command = new DeleteSecretCommand({id, secretKey});
         const deleteSecret = container.resolve('deleteSecret');
         await deleteSecret.execute(command);
 
         res.status(204).json();
       } catch (err) {
+        if (err instanceof FailedDecryptError) {
+          return res.status(401).json({message: err.message});
+        }
         if (err instanceof NotFoundSecretError) {
           return res.status(404).json({message: err.message});
         }

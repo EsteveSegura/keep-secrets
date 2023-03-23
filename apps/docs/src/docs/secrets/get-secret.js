@@ -25,7 +25,7 @@ module.exports = {
         ],
         responses:{
             '200':{
-                description:"Todo is obtained",
+                description:"Secret is obtained",
                 content:{
                     'application/json':{
                         schema:{
@@ -34,8 +34,18 @@ module.exports = {
                     }
                 }
             },
+            '500': {
+                description: 'Server Error',
+                content:{
+                    'application/json':{
+                        schema:{
+                            $ref:'#/components/schemas/ServerError'
+                        }
+                    }
+                }
+            },
             '404':{
-                description: "Todo is not found",
+                description: "Secret is not found",
                 content:{
                     'application/json':{
                         schema:{
