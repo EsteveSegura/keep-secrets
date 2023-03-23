@@ -1,5 +1,6 @@
 const getSecret = require('./get-secret');
 const createSecret = require('./create-secret');
+const deleteSecret = require('./delete-secret');
 
 module.exports = {
     paths:{
@@ -7,7 +8,8 @@ module.exports = {
             ...createSecret,
         },
         '/secrets/{id}/{secretKey}': {
-            ...getSecret
+            ...getSecret,
+            ...deleteSecret,
         }
 
     }

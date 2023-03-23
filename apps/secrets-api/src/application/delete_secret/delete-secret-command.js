@@ -1,6 +1,7 @@
 class DeleteSecretCommand {
-  constructor({id}) {
+  constructor({id, secretKey}) {
     this.id = id;
+    this.secretKey = secretKey;
   }
 }
 
