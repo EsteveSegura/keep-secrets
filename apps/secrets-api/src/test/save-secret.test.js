@@ -9,18 +9,17 @@ jest.spyOn(global, 'Date').mockImplementation(() => mockDate);
 describe('Save Secret', () => {
   const secretRepositoryMock = {save: jest.fn(), findById: jest.fn()};
   const idGeneratorMock = {generate: jest.fn()};
-  const tokenGeneratorMock = {generate: jest.fn()};
   const cipherMock = {encrypt: jest.fn()};
+  const garbageCollectorMock = {run: jest.fn()};
 
   beforeEach(() => {
     saveSecretMock = new SaveSecret({
       idGenerator: idGeneratorMock,
       secretRepository: secretRepositoryMock,
-      tokenGenerator: tokenGeneratorMock,
       cipher: cipherMock,
+      garbageCollector: garbageCollectorMock,
     });
   });
-
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -32,7 +31,6 @@ describe('Save Secret', () => {
     const expireAt = 6000;
 
     idGeneratorMock.generate.mockReturnValue('111133333');
-    tokenGeneratorMock.generate.mockReturnValue('qngionqiowefnqwe');
     secretRepositoryMock.findById.mockReturnValue(null);
     cipherMock.encrypt.mockReturnValue({
       iv: '444',
@@ -59,7 +57,7 @@ describe('Save Secret', () => {
     expect(secretRepositoryMock.findById).toHaveBeenCalledTimes(1);
     expect(secretRepositoryMock.findById).toHaveBeenCalledWith('111133333');
     expect(idGeneratorMock.generate).toHaveBeenCalledTimes(1);
-    expect(tokenGeneratorMock.generate).toHaveBeenCalledTimes(1);
+    expect(garbageCollectorMock.run).toHaveBeenCalledTimes(1);
   });
 
   test('should error when secret id already exists', async () => {
@@ -67,7 +65,6 @@ describe('Save Secret', () => {
     const expireAt = 6000;
 
     idGeneratorMock.generate.mockReturnValue('111133333');
-    tokenGeneratorMock.generate.mockReturnValue('qngionqiowefnqwe');
     secretRepositoryMock.findById.mockReturnValue(true);
 
     await (expect(saveSecretMock.execute({payload, expireAt}))).rejects.toThrow(new Error('Secret id already exists'));
@@ -77,6 +74,6 @@ describe('Save Secret', () => {
     expect(secretRepositoryMock.findById).toHaveBeenCalledTimes(1);
     expect(secretRepositoryMock.findById).toHaveBeenCalledWith('111133333');
     expect(idGeneratorMock.generate).toHaveBeenCalledTimes(1);
-    expect(tokenGeneratorMock.generate).toHaveBeenCalledTimes(1);
+    expect(garbageCollectorMock.run).toHaveBeenCalledTimes(0);
   });
 });

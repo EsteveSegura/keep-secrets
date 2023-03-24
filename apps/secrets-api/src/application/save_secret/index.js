@@ -3,15 +3,15 @@ const AlreadyExistsSecretError = require('../../domain/secret/errors/already-exi
 const SaveSecretResponse = require('./save-secret-response');
 
 class SaveSecret {
-  constructor({idGenerator, secretRepository, cipher, logger}) {
+  constructor({idGenerator, secretRepository, cipher, garbageCollector, logger}) {
     this.idGenerator = idGenerator;
     this.secretRepository = secretRepository;
     this.cipher = cipher;
+    this.garbageCollector = garbageCollector;
     this.logger = logger;
   }
 
   async execute({payload, expireAt}) {
-
     const id = this.idGenerator.generate();
     const getSecret = await this.secretRepository.findById(id);
     this._assertSecretExists(getSecret);
@@ -34,12 +34,8 @@ class SaveSecret {
     // Running garbageCollector for deleting all
     // remainins of the keys used for encryptios
     // and deleting all traces from RAM.
-    this._runGarbageCollector();
+    this.garbageCollector.run();
     return new SaveSecretResponse({id, secretKey});
-  }
-
-  _runGarbageCollector() {
-    global.gc();
   }
 
   _assertSecretExists(secret) {

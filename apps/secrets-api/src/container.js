@@ -13,6 +13,7 @@ const tokenGenerator = require('./domain/services/token-generator');
 const Cipher = require('./domain/services/cipher');
 const findSecret = require('./application/find_secret');
 const deleteSecret = require('./application/delete_secret');
+const garbageCollector = require('./infrastructure/services/garbage-collector');
 
 const container = awilix.createContainer({
   injectionMode: awilix.InjectionMode.PROXY,
@@ -32,6 +33,8 @@ container.register({
   cipher: awilix.asClass(Cipher),
   findSecret: awilix.asClass(findSecret),
   deleteSecret: awilix.asClass(deleteSecret),
+  global: awilix.asValue(global),
+  garbageCollector: awilix.asClass(garbageCollector),
 });
 
 module.exports = container;
