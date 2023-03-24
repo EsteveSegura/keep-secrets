@@ -9,7 +9,6 @@ const crypto = require('crypto');
 const {v4: uuidv4} = require('uuid');
 const SaveSecret = require('./application/save_secret');
 const idGenerator = require('./domain/services/id-generator');
-const tokenGenerator = require('./domain/services/token-generator');
 const Cipher = require('./domain/services/cipher');
 const findSecret = require('./application/find_secret');
 const deleteSecret = require('./application/delete_secret');
@@ -29,7 +28,6 @@ container.register({
   uuidv4: awilix.asValue(uuidv4),
   saveSecret: awilix.asClass(SaveSecret),
   idGenerator: awilix.asFunction(idGenerator),
-  tokenGenerator: awilix.asFunction(tokenGenerator),
   cipher: awilix.asClass(Cipher),
   findSecret: awilix.asClass(findSecret),
   deleteSecret: awilix.asClass(deleteSecret),

@@ -1,5 +1,5 @@
-const Secret = require('../domain/secret/Secret');
-const SaveSecret = require('../application/save_secret');
+const Secret = require('../../../domain/secret/Secret');
+const SaveSecret = require('../../../application/save_secret');
 
 const MOCK_DATE_STRING = '2022-06-30T20:28:10.001Z';
 const mockDate = new Date(MOCK_DATE_STRING);

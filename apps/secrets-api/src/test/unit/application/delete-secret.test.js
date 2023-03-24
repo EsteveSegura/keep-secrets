@@ -1,5 +1,5 @@
-const Secret = require('../domain/secret/Secret');
-const DeleteSecret = require('../application/delete_secret');
+const Secret = require('../../../domain/secret/Secret');
+const DeleteSecret = require('../../../application/delete_secret');
 
 describe('Delete Secret', () => {
   let deleteSecret;
