@@ -7,10 +7,12 @@ describe('Delete Secret', () => {
     delete: jest.fn(),
     findById: jest.fn(),
   };
+  const cipherMock = {decrypt: jest.fn()};
 
   beforeEach(() => {
     deleteSecret = new DeleteSecret({
       secretRepository: secretRepositoryMock,
+      cipher: cipherMock,
     });
   });
 
@@ -33,12 +35,14 @@ describe('Delete Secret', () => {
 
     secretRepositoryMock.findById.mockReturnValue(secretToDelete);
 
-    await deleteSecret.execute({id: '11'});
+    await deleteSecret.execute({id: '11', secretKey: 'sad'});
 
     expect(secretRepositoryMock.findById).toHaveBeenCalledTimes(1);
     expect(secretRepositoryMock.findById).toHaveBeenCalledWith('11');
     expect(secretRepositoryMock.delete).toHaveBeenCalledTimes(1);
     expect(secretRepositoryMock.delete).toHaveBeenCalledWith('11');
+    expect(cipherMock.decrypt).toHaveBeenCalledWith({content: 'zz', iv: '444', secretKey: 'sad'});
+    expect(cipherMock.decrypt).toHaveBeenCalledTimes(1);
   });
 
   test('should throw error when trying to dleeta secret that not exists', async ()=> {
@@ -49,5 +53,6 @@ describe('Delete Secret', () => {
     expect(secretRepositoryMock.findById).toHaveBeenCalledTimes(1);
     expect(secretRepositoryMock.findById).toHaveBeenCalledWith('11');
     expect(secretRepositoryMock.delete).not.toHaveBeenCalled();
+    expect(cipherMock.decrypt).toHaveBeenCalledTimes(0);
   });
 });

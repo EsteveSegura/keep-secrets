@@ -4,7 +4,7 @@ const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
 
-const {server:{port}} = require('./infrastructure/config');
+const {server: {port}} = require('./infrastructure/config');
 
 app.use(express.json());
 app.use(cors());
