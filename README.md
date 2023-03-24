@@ -57,6 +57,12 @@ networks:
     name: keep-secrets
 ```
 
+## Architecture
+The architecture of keep-secrets follows a service approach, it does not follow a very focused approach where all services are small (microservices), it is intended to build services with several nested contexts, creating aggregates. 
+
+All calls are routed through a gateway which in turn has the ability to do some checks to remove that burden from the rest of the services.
+![Architecture Schema](./assets/keep-secrets.png)
+
 ## Usage
 You can reach the frontend via browser
 ```
