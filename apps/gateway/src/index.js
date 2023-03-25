@@ -26,9 +26,19 @@ const docsProxy = createProxyMiddleware({
   loglevel: 'info',
 });
 
+const authProxy = createProxyMiddleware({
+  target: 'http://localhost:3003/',
+  changeOrigin: true,
+  pathRewrite: {
+    '^/auth': '/auth',
+  },
+  loglevel: 'info',
+});
+
 app.use(cors());
 app.use(tokenValidator);
 app.use('/api/v1/secrets', secretProxy);
+app.use('/api/v1/auth', authProxy);
 app.use('/docs', docsProxy);
 
 app.listen(port, () => {

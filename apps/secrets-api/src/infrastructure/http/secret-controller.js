@@ -12,7 +12,7 @@ const NotFoundSecretError = require('../../domain/secret/errors/not-found-secret
 const AlreadyExistsSecretError = require('../../domain/secret/errors/already-exists-secret-error');
 const FailedDecryptError = require('../../domain/errors/failed-decrypt-error');
 
-// const isTokenPresent = require('./middleware/token-is-present');
+const isTokenPresent = require('./middleware/token-is-present');
 const httpValidator = require('./middleware/http-validator');
 
 const {IS_STRING, IS_NUMBER, INVALID_LENGTH, NOT_EMPTY, INVALID_INT_RANGE} = require('./validation-values');
@@ -27,7 +27,7 @@ router.post('/',
         .isNumeric().withMessage(IS_NUMBER)
         .isInt({min: 1, max: 43830}).withMessage(`${INVALID_INT_RANGE} 1 and 43830`),
     httpValidator,
-    // isTokenPresent,
+    isTokenPresent,
     async (req, res) => {
       const {payload, expireAt} = req.body;
 
@@ -53,7 +53,7 @@ router.get('/:id/:secretKey',
         .notEmpty().withMessage(NOT_EMPTY)
         .isString().withMessage(IS_STRING),
     httpValidator,
-    // isTokenPresent,
+    isTokenPresent,
     async (req, res) => {
       const {id, secretKey} = req.params;
 
@@ -82,7 +82,7 @@ router.delete('/:id/:secretKey',
         .notEmpty().withMessage(NOT_EMPTY)
         .isString().withMessage(IS_STRING),
     httpValidator,
-    // isTokenPresent,
+    isTokenPresent,
     async (req, res) => {
       const {id, secretKey} = req.params;
 

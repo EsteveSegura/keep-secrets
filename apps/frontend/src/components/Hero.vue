@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 import SharedButton from "./SharedButton.vue";
 import SharedInput from "./SharedInput.vue";
 import SharedSelect from "./SharedSelect.vue";
@@ -119,11 +120,13 @@ export default {
     },
     async createSecret() {
       try {
+        const accessToken = Cookies.get('access_token');
         const apiRequest = await fetch(`${import.meta.env.PUBLIC_KEEP_SECRETS_API_BASE_URL}/secrets`, {
           method: "POST",
           headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${accessToken}`
           },
           body: JSON.stringify({
             payload: this.currentPayload,
