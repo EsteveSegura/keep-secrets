@@ -15,7 +15,7 @@ container.register({
   uuidv4: awilix.asValue(uuidv4),
   idGenerator: awilix.asFunction(idGenerator),
   createSession: awilix.asClass(createSession),
-  jwt: awilix.asValue(jwt)
+  jwt: awilix.asValue(jwt),
 });
 
 module.exports = container;

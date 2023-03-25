@@ -19,17 +19,17 @@ class Session {
     this._id = value;
   }
 
-   set aud(aud) {
-      if (!aud) {
-        throw new InvalidSessionError('Field aud in Session cannot be empty');
-      }
-  
-      this._aud = aud;
+  set aud(aud) {
+    if (!aud) {
+      throw new InvalidSessionError('Field aud in Session cannot be empty');
     }
-  
-    get aud() {
-      return this._aud;
-    }
+
+    this._aud = aud;
+  }
+
+  get aud() {
+    return this._aud;
+  }
 
   get expireAt() {
     return this._expireAt;

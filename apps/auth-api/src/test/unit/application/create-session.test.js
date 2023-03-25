@@ -1,17 +1,17 @@
 const CreateSession = require('../../../application/create_session');
 
 
-describe('Delete Secret', () => {
+describe('Create Session', () => {
   let createSession;
   const jwtMock = {
     sign: jest.fn(),
   };
   const idGeneratorMock = {
     generate: jest.fn(),
-  }
+  };
 
   beforeEach(() => {
-    Date.now = jest.fn(() => 1487076708000)
+    Date.now = jest.fn(() => 1487076708000);
     createSession = new CreateSession({
       jwt: jwtMock,
       idGenerator: idGeneratorMock,
@@ -35,9 +35,9 @@ describe('Delete Secret', () => {
       exp: 1487163108000,
       scope: 'read write',
       sub: 'id',
-      aud: 'web'
+      aud: 'web',
     }, 'MySuperSecret');
-    expect(token).toEqual({"accessToken": "bla"})
+    expect(token).toEqual({'accessToken': 'bla'});
   });
 
   test('should throw error when trying to create token with invalid client', async ()=> {
