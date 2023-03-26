@@ -20,10 +20,11 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 import SharedTextArea from "./SharedTextArea.vue";
 export default {
   name: "IndexPage",
-  props: ['id', 'secretKey'],
+  props: ["id", "secretKey"],
   components: {
     SharedTextArea,
   },
@@ -35,18 +36,29 @@ export default {
   },
   async mounted() {
     try {
-      console.log(this.secretKey)
-      const request = await fetch(`${import.meta.env.PUBLIC_KEEP_SECRETS_API_BASE_URL}/secrets/${this.id}/${this.secretKey}`);
-      const response = await request.json()
-      
-      if(request.status === 404){
+      const accessToken = Cookies.get('access_token');
+      const request = await fetch(
+        `${import.meta.env.PUBLIC_KEEP_SECRETS_API_BASE_URL}/secrets/${
+          this.id
+        }/${this.secretKey}`,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      const response = await request.json();
+
+      if (request.status === 404) {
         this.secretExists = false;
       }
 
-
       this.decryptedPayload = response.payload;
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   },
 };

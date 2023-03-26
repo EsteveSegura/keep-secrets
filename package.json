@@ -11,9 +11,11 @@
   "scripts" : {
     "prestart": "concurrently \"yarn workspace frontend build\" ",
     "start": "concurrently \"yarn workspace secrets-api start\" \"yarn workspace gateway start\" \"yarn workspace frontend serve:build\"",
-    "dev": "concurrently \"yarn workspace gateway dev\" \"yarn workspace secrets-api dev\" \"yarn workspace frontend dev --host\" \"yarn workspace docs dev\"",
+    "dev": "concurrently \"yarn workspace gateway dev\" \"yarn workspace secrets-api dev\" \"yarn workspace frontend dev --host\" \"yarn workspace docs dev\" \"yarn workspace auth-api dev\"",
     "secrets-api:lint": "yarn workspace secrets-api lint",
-    "secrets-api:test": "yarn workspace secrets-api test"
+    "secrets-api:test": "yarn workspace secrets-api test",
+    "auth-api:test": "yarn workspace auth-api test",
+    "auth-api:lint": "yarn workspace auth-api lint"
   },
   "devDependencies": {
     "concurrently": "^7.6.0"

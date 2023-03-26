@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const {keepsecrets: {signature}} = require('../../config');
+const {keepsecrets: {signature, allowedClient}} = require('../../config');
 
 const tokenValidator = async (req, res, next) => {
   const {headers} = req;
@@ -15,7 +15,12 @@ const tokenValidator = async (req, res, next) => {
   }
 
   try {
-    await jwt.verify(token, signature);
+    const {aud} = await jwt.verify(token, signature);
+    const clients = allowedClient.split(',');
+    if(!clients.includes(aud)) {
+      return res.status(403).json({message: 'Invalid client'});  
+    }
+
     next();
   } catch (err) {
     return res.status(403).json({message: 'Invalid token'});

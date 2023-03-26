@@ -24,3 +24,5 @@ jobs:
     - run: yarn install --frozen-lockfile
     - run: yarn secrets-api:lint
     - run: yarn secrets-api:test
+    - run: yarn auth-api:lint
+    - run: yarn auth-api:test

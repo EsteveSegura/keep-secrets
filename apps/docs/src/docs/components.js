@@ -27,6 +27,16 @@ module.exports = {
                     },
                 }
             },
+            AccessToken:{
+                type:'object',
+                properties:{
+                    secretKey:{
+                        type:'jwt',
+                        description:"JWT access token",
+                        example:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzk3NjUxODczNzAsImV4cCI6MTY3OTg1MTU4NzM3MCwiYXVkIjoid2ViIiwic3ViIjoiMDU2ZDNjNmUtNjgxNS00MDg4LTlhZDMtZDE3Y2NiMzdlZjg1Iiwic2NvcGUiOiJyZWFkIHdyaXRlIn0.6C9GKs9cKC4j3qLv9PIqNWicu8tqNtKGrOwx3nzah6E"
+                    },
+                }
+            },
             SecretInput:{
                 type:'object',
                 properties:{
@@ -40,6 +50,16 @@ module.exports = {
                         description:"Minutes for the experation of the secret",
                         example:5
                     }
+                }
+            },
+            ClientInput:{
+                type:'object',
+                properties:{
+                    aud:{
+                        type:'string',
+                        description:"Client for the token generation",
+                        example:"web"
+                    },
                 }
             },
             SecretDecrypted:{

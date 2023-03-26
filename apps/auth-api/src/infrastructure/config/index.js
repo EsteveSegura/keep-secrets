@@ -2,7 +2,7 @@ const env = process.env.NODE_ENV;
 
 const run = {
   server: {
-    port: process.env.GATEWAY_PORT || 3000,
+    port: process.env.AUTH_API_PORT || 3003,
   },
   keepsecrets: {
     signature: process.env.JWT_KEY || 'MySuperSecret',
@@ -12,7 +12,7 @@ const run = {
 
 const test = {
   server: {
-    port: 3000,
+    port: 3003,
   },
   keepsecrets: {
     signature: 'MySuperSecret',
