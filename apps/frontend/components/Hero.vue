@@ -67,81 +67,70 @@
   </header>
 </template>
 
-<script>
-import Cookies from 'js-cookie'
-import SharedButton from "./SharedButton.vue";
-import SharedInput from "./SharedInput.vue";
-import SharedSelect from "./SharedSelect.vue";
-import SharedTextArea from "./SharedTextArea.vue";
+<script setup>
+const config = useRuntimeConfig();
 
-export default {
-  name: "Hero",
-  components: {
-    SharedButton,
-    SharedInput,
-    SharedSelect,
-    SharedTextArea,
+const secretUrl = ref("");
+const currentPayload = ref("");
+const currentTime = ref("");
+const secretCreated = ref(false);
+const timeOptions = ref([
+  {
+    label: "5 min",
+    value: 5,
   },
-  data() {
-    return {
-      secretUrl: "",
-      currentPayload: "",
-      currentTime: "",
-      secretCreated: false,
-      timeOptions: [
-        {
-          label: "5 min",
-          value: 5,
-        },
-        {
-          label: "30 min",
-          value: 30,
-        },
-        {
-          label: "1 hour",
-          value: 60,
-        },
-        {
-          label: "3 hour",
-          value: 180,
-        },
-      ],
-    };
+  {
+    label: "30 min",
+    value: 30,
   },
-  methods: {
-    changeTime(value) {
-      this.currentTime = value;
-    },
-    changePayload(value) {
-      this.currentPayload = value;
-    },
-    backToHome() {
-      this.secretCreated = false;
-    },
-    async createSecret() {
-      try {
-        const accessToken = Cookies.get('access_token');
-        const apiRequest = await fetch(`${import.meta.env.PUBLIC_KEEP_SECRETS_API_BASE_URL}/secrets`, {
-          method: "POST",
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'authorization': `Bearer ${accessToken}`
-          },
-          body: JSON.stringify({
-            payload: this.currentPayload,
-            expireAt: this.currentTime,
-          }),
-        });
-        const response = await apiRequest.json() 
-        this.secretUrl = `${import.meta.env.PUBLIC_KEEP_SECRETS_FRONTEND_BASE_URL}/secret/${response.id}/${response.secretKey}`;
-        this.secretCreated = true;
-      } catch (err) {
-        alert("Something went worng, please try again.");
+  {
+    label: "1 hour",
+    value: 60,
+  },
+  {
+    label: "3 hour",
+    value: 180,
+  },
+]);
+
+function changeTime(value) {
+  currentTime.value = value;
+}
+
+function changePayload(value) {
+  currentPayload.value = value;
+}
+
+function backToHome() {
+  secretCreated.value = false;
+}
+
+async function createSecret() {
+  try {
+    const tokenCookie = useCookie('access_token');
+    const apiRequest = await fetch(
+      `${config.KEEP_SECRETS_API_BASE_URL}/secrets`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          authorization: `Bearer ${tokenCookie.value}`,
+        },
+        body: JSON.stringify({
+          payload: currentPayload.value,
+          expireAt: currentTime.value,
+        }),
       }
-    },
-  },
-};
+    );
+    const response = await apiRequest.json();
+    secretUrl.value = `${config.KEEP_SECRETS_FRONTEND_BASE_URL}/secret/${response.id}/${response.secretKey}`;
+    secretCreated.value = true;
+  } catch (err) {
+    console.log(err)
+    alert("Something went worng, please try again.");
+  }
+}
 </script>
 
 <style>

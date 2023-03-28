@@ -4,7 +4,6 @@ on:
   push:
     branches: 
       - main
-      - 'feature/**'
   pull_request:
     branches: 
       - main
@@ -22,7 +21,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: yarn install --frozen-lockfile
-    - run: yarn secrets-api:lint
-    - run: yarn secrets-api:test
-    - run: yarn auth-api:lint
-    - run: yarn auth-api:test
+    - run: yarn lint
+    - run: yarn test

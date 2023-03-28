@@ -105,3 +105,5 @@ dist
 
 # data docker folder
 data/
+
+frontend-nuxt/
