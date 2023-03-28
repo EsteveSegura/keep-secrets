@@ -9,7 +9,7 @@
     "apps/*"
   ],
   "scripts" : {
-    "dev": "concurrently \"yarn workspace gateway dev\" \"yarn workspace secrets-api dev\" \"yarn workspace frontend dev --host\" \"yarn workspace docs dev\" \"yarn workspace auth-api dev\"",
+    "dev": "concurrently \"yarn workspace gateway dev\" \"yarn workspace secrets-api dev\" \"yarn workspace frontend dev --port=8080\" \"yarn workspace docs dev\" \"yarn workspace auth-api dev\"",
     "lint:fix": "yarn workspace auth-api lint -- --fix && yarn workspace secrets-api lint -- --fix",
     "lint": "yarn workspace auth-api lint && yarn workspace secrets-api lint",
     "test": "yarn workspace auth-api test && yarn workspace secrets-api test"
