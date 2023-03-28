@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "scripts": {
     "build": "nuxt build",
+    "start": "nuxt start",
     "dev": "nuxt dev --port=8080",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
